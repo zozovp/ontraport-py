@@ -11,6 +11,7 @@ class Contact(
     CreateMixin,
     RetrieveMixin,
     DeleteMixin,
+    SearchMixin,
     ):
     endpoint = "cdata.php"
     outer_tag = "contact"
@@ -59,6 +60,7 @@ class Contact(
         'birthday', 'date_added',
         'last_activity', 'date_modified'
         ])
+
     fetch_xml_id_tag = "contact_id"
     delete_xml_id_tag = "contact_id"
     create_req_type = "add"

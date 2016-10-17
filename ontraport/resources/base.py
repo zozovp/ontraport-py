@@ -226,6 +226,39 @@ class RetrieveMixin(object):
         return cls.object_from_xml(xml)
 
 
+class SearchMixin(object):
+    search_xml_id_tag = "search"
+    equation_xml_id_tag = "equation"
+    search_req_type = "search"
+
+    @classmethod
+    def search_email(cls, email, **params):
+        obj = cls(**params)
+
+        xml = etree.Element(obj.search_xml_id_tag)
+        equation = etree.Element(obj.equation_xml_id_tag)
+        field = etree.Element('field')
+        field.text = 'Email'
+        op = etree.Element('op')
+        op.text = 'e'
+        value = etree.Element('value')
+        value.text = email
+
+        equation.append(field)
+        equation.append(op)
+        equation.append(value)
+
+        xml.append(equation)
+        data = etree.tostring(xml)
+
+        resp = obj.request(
+            req_type=obj.search_req_type,
+            data=data,
+            )
+        xml = resp.content
+        return cls.object_from_xml(xml)
+
+
 class UpdateMixin(object):
 
     def save(self):
